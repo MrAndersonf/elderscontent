@@ -86,6 +86,7 @@ body {
   font-size: 25px;
   border: 1px solid #fff;
   width: 150px;
+  height: 35px;
 }
 
 .btn_cadastrar:hover{

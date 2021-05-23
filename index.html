@@ -5,11 +5,114 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
-    <title>Document</title>
+    <title>Plataforma Idosos</title>
   </head>
 
   <body>
+    <div
+      class="modal fade"
+      id="modalEdit"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div
+          class="modal-content"
+          style="
+            background-color: #4158d0;
+            background-image: linear-gradient(
+              43deg,
+              #4158d0 0%,
+              #c850c0 46%,
+              #ffcc70 100%
+            );
+          "
+        >
+          <div class="modal-header">
+            <h5
+              class="modal-title"
+              id="exampleModalLabel"
+              style="color: #fff; font-weight: 900"
+            >
+              Editar registro
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span style="color: #fff; font-weight: 900" aria-hidden="true"
+                >&times;</span
+              >
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input_section">
+              <div class="section_label">
+                <label class="text_label" for="video_id">VIDEO-ID</label>
+              </div>
+              <input id="idEdit" class="input_label" type="text" />
+            </div>
+            <div class="input_section">
+              <div class="section_label">
+                <label class="text_label" for="video_id">TITLE</label>
+              </div>
+              <input id="titleEdit" class="input_label" type="text" />
+            </div>
+            <div class="input_section">
+              <div class="section_label">
+                <label class="text_label" for="video_id">TAGS</label>
+              </div>
+              <input id="tagEdit" class="input_label" type="text" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-dismiss="modal"
+              style="width: 100px; font-weight: 900"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              style="width: 100px; font-weight: 900"
+              onclick="event.preventDefault();editVideoFromFirebase()"
+            >
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modalPlay"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-md">
+          <iframe
+            id="videoSource"
+            width="540"
+            height="360"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
     <div class="main_content">
+      <h2 style="font-weight: 900; color: #fff">Cadastre novos vídeos</h2>
       <div class="input_section">
         <div class="section_label">
           <label class="text_label" for="video_id">VIDEO-ID</label>
@@ -38,54 +141,188 @@
       </div>
     </div>
     <div class="second_content">
-      <div id="videos_list" style="overflow: auto"></div>
+      <div id="videos_list" style="overflow: auto">
+        <div style="display: flex; flex-direction: row">
+          <div style="width: 80%">
+            <img
+              style="width: 100%; height: auto"
+              src="https://img.youtube.com/vi/ayxRtBHw754/0.jpg"
+              alt=""
+            />
+            <div class="video_details">
+              <div class="details">
+                <div class="itens">ID:</div>
+                <div class="description">ayxRtBHw754</div>
+              </div>
+              <div class="details">
+                <div class="itens">TÍTULO:</div>
+                <div class="description">ayxRtBHw754</div>
+              </div>
+              <div class="details">
+                <div class="itens">TAGS:</div>
+                <div class="description">ayxRtBHw754</div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              width: 20%;
+              display: flex;
+              flex-direction: column;
+              margin-left: 5px;
+            "
+          >
+            <div style="background-color: transparent; margin-bottom: 5px">
+              <button
+                style="background-color: transparent; border: none"
+                onclick="deleteRegister('ayxRtBHw754')"
+              >
+                <img src="./trash-2.svg" alt="" />
+              </button>
+            </div>
+            <div style="background-color: transparent; margin-bottom: 5px">
+              <button
+                style="background-color: transparent; border: none"
+                onclick="playEdit()"
+              >
+                <img src="./edit.svg" alt="" />
+              </button>
+            </div>
+            <div style="background-color: transparent; margin-bottom: 5px">
+              <button
+                style="background-color: transparent; border: none"
+                onclick="playVideo()"
+              >
+                <img src="./youtube.svg" alt="" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
     <script>
-  var firebaseConfig = {
-    apiKey: "AIzaSyCKDICRkVxUdBBtrlENCC_X3oOTed92UTw",
-    authDomain: "myappproject-5852a.firebaseapp.com",
-    projectId: "myappproject-5852a",
-    storageBucket: "myappproject-5852a.appspot.com",
-    messagingSenderId: "994101301871",
-    appId: "1:994101301871:web:93554248936885f709b39a",
-    measurementId: "G-X968L09L5K"
-  };
+      var firebaseConfig = {
+        apiKey: "AIzaSyCKDICRkVxUdBBtrlENCC_X3oOTed92UTw",
+        authDomain: "myappproject-5852a.firebaseapp.com",
+        projectId: "myappproject-5852a",
+        storageBucket: "myappproject-5852a.appspot.com",
+        messagingSenderId: "994101301871",
+        appId: "1:994101301871:web:93554248936885f709b39a",
+        measurementId: "G-X968L09L5K",
+      };
 
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
-
       var firestore = firebase.firestore();
       readVideoFromFirebase();
       function writeVideoToFirebase() {
         let _id = $("#id").val();
         let _title = $("#title").val();
         let _tag = $("#tag").val();
-        const docref = firestore.doc(`videos/${_id}`);
-        docref
-          .set({
-            id: _id,
-            title: _title,
-            tag: _tag,
-          })
+        if (_id && _title && _tag !== "") {
+          const docref = firestore.doc(`videos/${_id}`);
+          docref
+            .set({
+              id: _id,
+              title: _title,
+              tag: _tag,
+            })
+            .then(() => {
+              readVideoFromFirebase();
+              $("#id").val("");
+              $("#title").val("");
+              $("#tag").val("");
+              alert("Registro salvo com sucesso!");
+            })
+            .catch((err) => console.log(err));
+        }
+      }
+
+      function editVideoFromFirebase() {
+        let _id = $("#idEdit").val();
+        let _title = $("#titleEdit").val();
+        let _tag = $("#tagEdit").val();
+        if (_id && _title && _tag !== "") {
+          const docref = firestore.doc(`videos/${_id}`);
+          docref
+            .set({
+              id: _id,
+              title: _title,
+              tag: _tag,
+            })
+            .then(() => {
+              readVideoFromFirebase();
+              $("#idEdit").val("");
+              $("#titleEdit").val("");
+              $("#tagEdit").val("");
+              $("#modalEdit").modal("hide");
+              alert("Registro editado com sucesso!");
+            })
+            .catch((err) => console.log(err));
+        }
+      }
+
+      function deleteRegister(id) {
+        firestore
+          .collection("videos")
+          .doc(id)
+          .delete()
           .then(() => {
             readVideoFromFirebase();
-            $("#id").val('');
-            $("#title").val('');
-            $("#tag").val('');
-            alert("Registro salvo com sucesso!")
+            alert("Registro deletado com sucesso.");
           })
-          .catch((err) => console.log(err));
+          .catch((error) => {
+            console.error("Error removing document: ", error);
+          });
+      }
+      function playVideo(id) {
+        $("#videoSource").attr(
+          "src",
+          `https://www.youtube.com/embed/${id}?&autoplay=1`
+        );
+        $("#modalPlay").modal("show");
+      }
+
+      function playEdit(id) {
+        $("#modalEdit").modal("show");
+        firestore
+          .collection("videos")
+          .get(id)
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              $("#idEdit").val(doc.data().id);
+              $("#titleEdit").val(doc.data().title);
+              $("#tagEdit").val(doc.data().tag);
+            });
+          });
       }
 
       function readVideoFromFirebase() {
@@ -95,24 +332,59 @@
           .get()
           .then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-              videos.push(`<div>
-          <img
-            style="width: 100%; height: auto"
-            src="https://img.youtube.com/vi/${doc.data().id}/0.jpg"
-            alt=""
-          />
-          <div class="video_details">
-            <div class="details">
-              <div class="itens">ID:</div>
-              <div class="description">${doc.data().id}</div>
+              videos.push(` <div style="display: flex; flex-direction: row">
+          <div style="width: 80%">
+            <img
+              style="width: 100%; height: auto"
+              src="https://img.youtube.com/vi/${doc.data().id}/0.jpg"
+              alt=""
+            />
+            <div class="video_details">
+              <div class="details">
+                <div class="itens">ID:</div>
+                <div class="description">${doc.data().id}</div>
+              </div>
+              <div class="details">
+                <div class="itens">TÍTULO:</div>
+                <div class="description">${doc.data().title}</div>
+              </div>
+              <div class="details">
+                <div class="itens">TAGS:</div>
+                <div class="description">${doc.data().tag}</div>
+              </div>
             </div>
-            <div class="details">
-              <div class="itens">TÍTULO:</div>
-              <div class="description">${doc.data().title}</div>
+          </div>
+          <div
+            style="
+              width: 20%;
+              display: flex;
+              flex-direction: column;
+              margin-left: 5px;
+            "
+          >
+            <div style="background-color: ; margin-bottom: 5px">
+              <button
+              style="background-color: #fff; border: none;width:50px;height:50px"
+                onclick="deleteRegister('${doc.data().id}')"
+              >
+                <img src="./trash-2.svg" alt="" />
+              </button>
             </div>
-            <div class="details">
-              <div class="itens">TAGS:</div>
-              <div class="description">${doc.data().tag}</div>
+            <div style="background-color: transparent; margin-bottom: 5px">
+              <button
+              style="background-color: #fff; border: none;width:50px;height:50px"
+                onclick="playEdit('${doc.data().id}')"
+              >
+                <img src="./edit.svg" alt="" />
+              </button>
+            </div>
+            <div style="background-color: transparent; margin-bottom: 5px">
+              <button
+                style="background-color: #fff; border: none;width:50px;height:50px"
+                onclick="playVideo('${doc.data().id}')"
+              >
+                <img src="./youtube.svg" alt="" />
+              </button>
             </div>
           </div>
         </div>`);
