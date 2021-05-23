@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="main_content">
+      <div class="input_section">
+        <div class="section_label">
+          <label class="text_label" for="video_id">VIDEO-ID</label>
+        </div>
+        <input id="id" class="input_label" type="text" />
+      </div>
+      <div class="input_section">
+        <div class="section_label">
+          <label class="text_label" for="video_id">TITLE</label>
+        </div>
+        <input id="title" class="input_label" type="text" />
+      </div>
+      <div class="input_section">
+        <div class="section_label">
+          <label class="text_label" for="video_id">TAGS</label>
+        </div>
+        <input id="tag" class="input_label" type="text" />
+      </div>
+      <div class="input_section">
+        <button
+          class="btn_cadastrar"
+          onclick="event.preventDefault();writeVideoToFirebase()"
+        >
+          Cadastrar
+        </button>
+      </div>
+    </div>
+    <div class="second_content">
+      <div id="videos_list" style="overflow: auto"></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyCKDICRkVxUdBBtrlENCC_X3oOTed92UTw",
+    authDomain: "myappproject-5852a.firebaseapp.com",
+    projectId: "myappproject-5852a",
+    storageBucket: "myappproject-5852a.appspot.com",
+    messagingSenderId: "994101301871",
+    appId: "1:994101301871:web:93554248936885f709b39a",
+    measurementId: "G-X968L09L5K"
+  };
+
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var firestore = firebase.firestore();
+      readVideoFromFirebase();
+      function writeVideoToFirebase() {
+        let _id = $("#id").val();
+        let _title = $("#title").val();
+        let _tag = $("#tag").val();
+        const docref = firestore.doc(`videos/${_id}`);
+        docref
+          .set({
+            id: _id,
+            title: _title,
+            tag: _tag,
+          })
+          .then(() => {
+            readVideoFromFirebase();
+            $("#id").val('');
+            $("#title").val('');
+            $("#tag").val('');
+            alert("Registro salvo com sucesso!")
+          })
+          .catch((err) => console.log(err));
+      }
+
+      function readVideoFromFirebase() {
+        let videos = [];
+        firestore
+          .collection("videos")
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              videos.push(`<div>
+          <img
+            style="width: 100%; height: auto"
+            src="https://img.youtube.com/vi/${doc.data().id}/0.jpg"
+            alt=""
+          />
+          <div class="video_details">
+            <div class="details">
+              <div class="itens">ID:</div>
+              <div class="description">${doc.data().id}</div>
+            </div>
+            <div class="details">
+              <div class="itens">TÍTULO:</div>
+              <div class="description">${doc.data().title}</div>
+            </div>
+            <div class="details">
+              <div class="itens">TAGS:</div>
+              <div class="description">${doc.data().tag}</div>
+            </div>
+          </div>
+        </div>`);
+            });
+            insertToPage(videos);
+          });
+      }
+
+      function insertToPage(list) {
+        $("#videos_list").children().remove();
+        $("#videos_list").append(list);
+      }
+
+      //https://img.youtube.com/vi/${props.videoId}/0.jpg
+    </script>
+  </body>
+</html>
