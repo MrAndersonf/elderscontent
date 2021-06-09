@@ -248,12 +248,14 @@
         let _title = $("#title").val();
         let _tag = $("#tag").val();
         if (_id && _title && _tag !== "") {
-          const docref = firestore.doc(`videos/${_id}`);
+          const docref = firestore.doc(`Videos/${_id}`);
           docref
             .set({
               id: _id,
               title: _title,
-              tag: _tag,
+              tags: [..._tag.split(',')],
+              likes: [],
+              comments: []
             })
             .then(() => {
               readVideoFromFirebase();
@@ -271,12 +273,12 @@
         let _title = $("#titleEdit").val();
         let _tag = $("#tagEdit").val();
         if (_id && _title && _tag !== "") {
-          const docref = firestore.doc(`videos/${_id}`);
+          const docref = firestore.doc(`Videos/${_id}`);
           docref
             .set({
               id: _id,
               title: _title,
-              tag: _tag,
+              tags: [..._tag.split(',')],
             })
             .then(() => {
               readVideoFromFirebase();
@@ -292,7 +294,7 @@
 
       function deleteRegister(id) {
         firestore
-          .collection("videos")
+          .collection("Videos")
           .doc(id)
           .delete()
           .then(() => {
@@ -328,7 +330,7 @@
       function readVideoFromFirebase() {
         let videos = [];
         firestore
-          .collection("videos")
+          .collection("Videos")
           .get()
           .then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
@@ -350,7 +352,7 @@
               </div>
               <div class="details">
                 <div class="itens">TAGS:</div>
-                <div class="description">${doc.data().tag}</div>
+                <div class="description">${doc.data().tags.join(',')}</div>
               </div>
             </div>
           </div>
