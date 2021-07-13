@@ -4,6 +4,9 @@
   box-sizing: border-box;
 }
 
+::placeholder{
+  color: #fff;
+}
 body {
   display: flex;
   justify-content: center;
@@ -19,17 +22,13 @@ body {
 
 .input_section {
   display: flex;
-  flex-direction: row;
+  width: 80%;
+  flex-direction: column;
   margin-bottom: 5px;
 }
 
 .section_label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 130px;
-  height: 35px;
-  border: 1px solid #fff;
+  
 }
 
 .main_content {
@@ -56,43 +55,71 @@ body {
 .input_label {
   background: transparent;
   height: 35px;
-  width: 250px;
+  width: 100%;
   font-size: 23px;
-  font-weight: 600;
+  font-weight: 100;
   color: #fff !important;
   border: 1px solid #fff;
   align-content: center;
   text-align: center;
   margin: 0;
+border-radius: 5px;
+}
+
+.input_title {
+  background: transparent;
+  height: 80px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 100;
+  color: #fff !important;
+  border: 1px solid #fff;
+  align-content: center;
+  text-align: center;
+  margin: 0;
+border-radius: 5px;
+  
 }
 
 .input_label:focus {
-  outline-width: 0;
+  outline: none ;
+}
+
+.input_title:focus {
+  outline: none ;
 }
 
 .text_label {
   color: #fff;
   font-size: 23px;
-  font-weight: 900;
+  font-weight: 400;
   align-content: center;
   align-items: center;
 }
 
 
 .btn_cadastrar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: transparent;
   color: #fff;
-  font-weight: 900;
+  font-weight: 200;
   font-size: 25px;
   border: 1px solid #fff;
+  border-radius: 5px;
   width: 150px;
   height: 35px;
+  
+
 }
 
 .btn_cadastrar:hover{
   background-color: #fff;
-  color: #4158d0;
+  color: green;
+  font-weight: 600;
   cursor: pointer;
+box-shadow: -3px 3px rgba(0, 0, 0, .2);
 }
 
 .label_text{

@@ -52,19 +52,19 @@
           <div class="modal-body">
             <div class="input_section">
               <div class="section_label">
-                <label class="text_label" for="video_id">VIDEO-ID</label>
+                <label class="text_label" for="video_id">Código do vídeo</label>
               </div>
               <input id="idEdit" class="input_label" type="text" />
             </div>
             <div class="input_section">
               <div class="section_label">
-                <label class="text_label" for="video_id">TITLE</label>
+                <label class="text_label" for="video_id">Título do vídeo</label>
               </div>
               <input id="titleEdit" class="input_label" type="text" />
             </div>
             <div class="input_section">
               <div class="section_label">
-                <label class="text_label" for="video_id">TAGS</label>
+                <label class="text_label" for="video_id">Assunto (TAGS)</label>
               </div>
               <input id="tagEdit" class="input_label" type="text" />
             </div>
@@ -112,23 +112,23 @@
     </div>
 
     <div class="main_content">
-      <h2 style="font-weight: 900; color: #fff">Cadastre novos vídeos</h2>
+      <h2 style="font-weight: 600; color: #fff">Cadastre novos vídeos</h2>
       <div class="input_section">
-        <div class="section_label">
-          <label class="text_label" for="video_id">VIDEO-ID</label>
-        </div>
+        
+          <label class="text_label" for="video_id">Código do vídeo</label>
+      
         <input id="id" class="input_label" type="text" />
       </div>
       <div class="input_section">
-        <div class="section_label">
-          <label class="text_label" for="video_id">TITLE</label>
-        </div>
-        <input id="title" class="input_label" type="text" />
+       
+          <label class="text_label" for="video_id">Título do vídeo</label>
+        
+        <textarea id="title" class="input_title" rows="5" cols="60"></textarea>
       </div>
       <div class="input_section">
-        <div class="section_label">
-          <label class="text_label" for="video_id">TAGS</label>
-        </div>
+        
+          <label class="text_label" for="video_id">Assuntos (TAGS)</label>
+        
         <input id="tag" class="input_label" type="text" />
       </div>
       <div class="input_section">
@@ -151,15 +151,15 @@
             />
             <div class="video_details">
               <div class="details">
-                <div class="itens">ID:</div>
+                <div class="itens">Código do vídeo:</div>
                 <div class="description">ayxRtBHw754</div>
               </div>
               <div class="details">
-                <div class="itens">TÍTULO:</div>
+                <div class="itens">Título do vídeo:</div>
                 <div class="description">ayxRtBHw754</div>
               </div>
               <div class="details">
-                <div class="itens">TAGS:</div>
+                <div class="itens">Assuntos (TAGS):</div>
                 <div class="description">ayxRtBHw754</div>
               </div>
             </div>
@@ -316,14 +316,16 @@
       function playEdit(id) {
         $("#modalEdit").modal("show");
         firestore
-          .collection("videos")
-          .get(id)
-          .then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-              $("#idEdit").val(doc.data().id);
-              $("#titleEdit").val(doc.data().title);
-              $("#tagEdit").val(doc.data().tag);
-            });
+          .collection("Videos")
+          .doc(id)
+          .get()
+          .then(querySnapshot => {
+              
+              let doc = querySnapshot.data()
+              $("#idEdit").val(doc.id);
+              $("#titleEdit").val(doc.title);
+              $("#tagEdit").val(doc.tags.join(','));
+            
           });
       }
 
@@ -332,8 +334,9 @@
         firestore
           .collection("Videos")
           .get()
-          .then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
+          .then(querySnapshot => {
+            
+            querySnapshot.docs.forEach(doc => {
               videos.push(` <div style="display: flex; flex-direction: row">
           <div style="width: 80%">
             <img
