@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-::placeholder{
+::placeholder {
   color: #fff;
 }
 body {
@@ -28,11 +28,9 @@ body {
 }
 
 .section_label {
-  
 }
 
 .main_content {
- 
   width: 60%;
   height: 100vh;
   justify-content: center;
@@ -42,14 +40,12 @@ body {
 }
 
 .second_content {
-  
   width: 40%;
   height: 100vh;
   justify-content: center;
   align-items: center;
   display: flex;
   flex-direction: column;
-  
 }
 
 .input_label {
@@ -63,7 +59,7 @@ body {
   align-content: center;
   text-align: center;
   margin: 0;
-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .input_title {
@@ -77,16 +73,15 @@ border-radius: 5px;
   align-content: center;
   text-align: center;
   margin: 0;
-border-radius: 5px;
-  
+  border-radius: 5px;
 }
 
 .input_label:focus {
-  outline: none ;
+  outline: none;
 }
 
 .input_title:focus {
-  outline: none ;
+  outline: none;
 }
 
 .text_label {
@@ -97,52 +92,84 @@ border-radius: 5px;
   align-items: center;
 }
 
-
-.btn_cadastrar{
+.btn_cadastrar {
+  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
   color: #fff;
-  font-weight: 200;
-  font-size: 25px;
+  font-weight: 100;
+  font-size: 23px;
   border: 1px solid #fff;
   border-radius: 5px;
   width: 150px;
   height: 35px;
+}
+
+.btn_cadastrar:hover {
+outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: #fff;
+  font-weight: 100;
+  font-size: 23px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  width: 150px;
+  height: 35px;
+  box-shadow: -5px 5px rgba(0, 0, 0, 0.2);
   
-
 }
 
-.btn_cadastrar:hover{
-  background-color: #fff;
-  color: green;
-  font-weight: 600;
-  cursor: pointer;
-box-shadow: -3px 3px rgba(0, 0, 0, .2);
+.btn_cadastrar:active {
+outline: none;
+ 
+  
 }
 
-.label_text{
+
+
+.label_text {
   width: 60px;
 }
 
-.details{
+.btn_video {
+  background-color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.btn_video_area {
+  background-color: transparent;
+  margin-bottom: 5px;
+}
+
+.btn_video_area:hover {
+  box-shadow: -3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.details {
   display: flex;
   flex-direction: row;
 }
 
-.itens{
+.itens {
   width: 80px;
   font-size: 18px;
-  color:#fff;
+  color: #fff;
 }
 
-.description{
+.description {
   font-size: 18px;
   align-items: flex-end;
-  color:#fff;
+  color: #fff;
 }
 
-.video_details{
+.video_details {
   margin-bottom: 10px;
 }
