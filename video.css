@@ -36,7 +36,7 @@ body {
 
 .second_content {
   width: 50%;
-  height: calc(100vh - 65px);
+  height: calc(100vh);
   justify-content: center;
   align-items: center;
   display: flex;
