@@ -18,6 +18,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
+        <div id="numero"></div>
         <div
           class="modal-content"
           style="
@@ -394,6 +395,7 @@
             });
             insertToPage(videos);
           });
+        document.getElementById('numero').innerText = videos.length;
       }
 
       function insertToPage(list) {
