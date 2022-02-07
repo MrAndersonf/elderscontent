@@ -328,12 +328,14 @@
       }
 
       function readVideoFromFirebase() {
+        let counter = 0;
         let videos = [];
         firestore
           .collection("Videos")
           .get()
           .then((querySnapshot) => {
             querySnapshot.docs.forEach((doc) => {
+              counter+=1;
               videos.push(` <div style="display: flex; flex-direction: row">
           <div style="width: 100%">
             <img
@@ -394,7 +396,7 @@
         </div>`);
             });
             insertToPage(videos);
-            document.getElementById('numero').innerText = videos.length;
+            document.getElementById('numero').innerText = counter;
           });        
       }
 
